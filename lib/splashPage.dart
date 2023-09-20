@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() {
-  //to run an app
-  runApp(MaterialApp(
-    //default theme of our flutter app(material or cupertino)
-    home: SplashPage(), //imnitial page to to be launched while running an app
-  ));
-}
+
+ void main() {
+   //to run an app
+   runApp(MaterialApp(
+     //default theme of our flutter app(material or cupertino)
+     home: SplashPage(), //imnitial page to to be launched while running an app
+   ));
+ }
 
 class SplashPage extends StatelessWidget {
   @override
@@ -15,7 +16,7 @@ class SplashPage extends StatelessWidget {
     //to create our widget tree, we use build function.
     return Scaffold(
       //buildcontext- used to locate widgets on our widget tree and monitor actions.
-      // backgroundColor: Colors.yellow,
+       //backgroundColor: Colors.yellow,
       body: Container(
         decoration: BoxDecoration(
             //color: Colors.black38
@@ -23,12 +24,12 @@ class SplashPage extends StatelessWidget {
             //     fit: BoxFit.cover,
             //     image: NetworkImage(
             //         'https://images.unsplash.com/photo-1694078791403-95d92e7c901e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0Mnx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'))
-        gradient: LinearGradient(
-          begin: Alignment.bottomRight,
-          end: Alignment.topLeft,
-          colors: [
-            Colors.red,
-            Colors.yellow
+         gradient: LinearGradient(
+           begin: Alignment.bottomRight,
+           end: Alignment.topLeft,
+           colors: [
+             Colors.red,
+             Colors.yellow
           ]
         )
                                     ),
