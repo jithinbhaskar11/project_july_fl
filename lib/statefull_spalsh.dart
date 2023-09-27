@@ -61,7 +61,7 @@ class _Splash2State extends State<Splash2> {
               Text(
                 'Key:)',
                 style: GoogleFonts.abel(fontSize: 30, color: Colors.black,),
-              )
+              ),
             ],
           ),
         ),

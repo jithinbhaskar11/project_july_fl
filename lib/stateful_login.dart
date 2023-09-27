@@ -18,6 +18,9 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final formkey=GlobalKey<FormState>();
   String? passw;
+  bool passwordhidden=true;//means password is hidden
+  bool cpasshidden=true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,44 +93,64 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
-                    obscureText: true,
-                      obscuringCharacter: '*',
-                      decoration: InputDecoration(
-                          labelText: 'Password',
-                          hintText: 'Password',
-                          helperText: 'Password must contain atleast 6 charectors',
-                          border: OutlineInputBorder()),
-                      validator: (password) {
-                        passw=password;
-                        if (password!.isEmpty || password.length < 6) {
-                          return 'invalid credentials';
-                        } else {
-                          return null;
-                        }
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: TextFormField(
-                    obscureText: true,
-                    obscuringCharacter: '*',
+                    obscuringCharacter: "*",
+                    obscureText: passwordhidden,
+                    validator: (password) {
+                      passw = password;
+                      if (password!.isEmpty || password.length < 6) {
+                        return 'Password must contain atleast 6 characters';
+                      } else {
+                        return null;
+                      }},
                     decoration: InputDecoration(
-                        labelText: 'Confirm password',
-                        hintText: 'Re-enter your password',
-                        helperText: 'Please re-enter your password',
-                        border: OutlineInputBorder()),
-                    validator: (repass) {
-                      repass=passw;
-                      if (repass!.isEmpty || repass.length < 6) {
-                        return 'password must be same';
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                if(passwordhidden == true){
+                                  passwordhidden = false;
+                                }else{
+                                  passwordhidden = true;
+                                }
+                              });
+                            },
+                            icon: Icon(passwordhidden == true
+                                ? Icons.visibility_off_sharp
+                                : Icons.visibility)),
+                        border: OutlineInputBorder(),
+                        hintText: 'Password',
+                    labelText: 'Password',
+                    helperText: 're_enter password'),
+                  ),
+                ),
+                Padding( padding: const EdgeInsets.all(10.0),
+                  child: TextFormField(
+                    validator: (cpassword) {
+                      if (cpassword!.isEmpty || cpassword != passw) {
+                        return 'Password must be same';
                       } else {
                         return null;
                       }
                     },
+                    obscureText: cpasshidden,
+                    obscuringCharacter: "*",
+                    decoration:  InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Password',
+                        suffixIcon: IconButton(onPressed: (){
+                          setState(() {
+                            if(cpasshidden ==true){
+                              cpasshidden = false;
+                            }else{
+                              cpasshidden= true;
+                            }
+                          });
+                        },icon: Icon(cpasshidden== true?
+                        Icons.visibility_off_sharp:Icons.visibility))),
                   ),
                 ),
+
                 ElevatedButton(onPressed: (){
                   final valid=formkey.currentState!.validate();
                   if(valid){

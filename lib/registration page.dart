@@ -76,7 +76,7 @@ class Splash3state extends State {
                 decoration: InputDecoration(
                   labelText: 'Password',
                   hintText: 'password',
-                  helperText: 'the password must contai atleast 6 characters',
+                  helperText: 'the password must contain atleast 6 characters',
                   prefixIcon: Icon(Icons.password),
                   border: OutlineInputBorder()
                 ),
