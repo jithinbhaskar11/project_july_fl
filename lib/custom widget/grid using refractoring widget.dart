@@ -19,7 +19,7 @@ class Grid_with_refractoring extends StatelessWidget {
 Custom_card(image: NetworkImage('https://plus.unsplash.com/premium_photo-1695219819793-159c4258875c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1886&q=80'),
     text: 'my product',
     click: (){},
-  click1: () {},)
+  click1: () {},),
       ],),
     );
   }
