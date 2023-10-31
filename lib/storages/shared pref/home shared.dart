@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_july_fl/storages/reistration%20shared.dart';
+import 'package:project_july_fl/storages/shared%20pref/reistration%20shared.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login shared.dart';
