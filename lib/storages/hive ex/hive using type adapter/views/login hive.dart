@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:project_july_fl/storages/hive%20ex/hive%20using%20type%20adapter/database/hivedb.dart';
 import 'package:project_july_fl/storages/hive%20ex/hive%20using%20type%20adapter/views/reg%20hive.dart';
 
 import '../model/users.dart';
+import 'home hive.dart';
 
-void main()async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  await Hive.openBox<Users>('users');
-  //await Hive.registerAdapter(adapter);
-
-  runApp(MaterialApp(home: Hive_Login(),));
+  await Hive.openBox<Users>("users");
+  Hive.registerAdapter(UsersAdapter());
+  runApp(GetMaterialApp(
+    home: Hive_Login(),
+  ));
 }
 
 class Hive_Login extends StatelessWidget {
   final email_controller = TextEditingController();
-  final pwd_controller = TextEditingController();
+  final pass_controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hive Login"),
+        title: Text("Hive Registration"),
       ),
       body: Center(
         child: Padding(
@@ -31,31 +33,64 @@ class Hive_Login extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Login  Page"),
-
-              SizedBox(height: 15,),
+              Text("Login Page"),
+              SizedBox(height: 15),
               TextField(
                 controller: email_controller,
-                decoration: InputDecoration(border: OutlineInputBorder(),
-                    hintText: "E-Mail"
-                ),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(), hintText: "E-Mail"),
               ),
-              SizedBox(height: 15,),
+              SizedBox(
+                height: 15,
+              ),
               TextField(
-                controller: pwd_controller,
-                decoration: InputDecoration(border: OutlineInputBorder(),
-                    hintText: "Password"
-                ),
+                controller: pass_controller,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(), hintText: "Password"),
               ),
-              MaterialButton(onPressed: (){},
+              MaterialButton(
+                onPressed: () async{
+                  final users= await HiveDB.instance.getUsers();
+                  validateLogin(users);
+                },
                 shape: StadiumBorder(),
                 color: Colors.pink,
-                child: Text("Login"),),
-              TextButton(onPressed: (){Get.to(Hive_Reg());}, child: Text('Not a user? Register here!'))
+                child: Text("Login Here"),
+              ),
+
+              TextButton(
+                  onPressed: () {
+                    Get.to(Hive_Reg());
+                  },
+                  child: Text("Not a user,Register Here!!!"))
             ],
           ),
         ),
       ),
     );
   }
+
+ Future <void> validateLogin(List<Users> users) async {
+    final email= email_controller.text.trim();
+    final pwd= pass_controller.text.trim();
+    bool userFound=false;
+
+    if(email!='' && pwd!= ''){
+      await Future.forEach(users, (user){
+        if(user.email== email && user.password==pwd){
+          userFound=true;
+        }else{
+          userFound=false;
+        }
+      });
+      if(userFound==true){
+        Get.offAll(()=>Hive_Home(email:email));
+        Get.snackbar('sucess', 'Login sucess',backgroundColor: Colors.green);
+      }else{
+        Get.snackbar('Error', 'Login failed',backgroundColor: Colors.red);
+      }
+    }else{
+      Get.snackbar('Error', 'Fields must not be empty');
+    }
+ }
 }
